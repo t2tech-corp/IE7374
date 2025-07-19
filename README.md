@@ -11,8 +11,8 @@
 - [Framework](#framework)
 - [Dataset](#dataset)
 - [Model Development](#model-development)
-- [Training & Fine-Tuning](#training-&-fine-tuning)
-- [Evaluation & Metrics](#evaluation-&-metrics)
+- [Training and Fine-Tuning](#training-and-fine-tuning)
+- [Evaluation and Metrics](#evaluation-and-metrics)
 - [Requirements](#requirements)
 - [Usage](#usage)
 - [Results](#results)
@@ -87,9 +87,9 @@ GPT-2 is an appropriate choice for our project due to several key reasons direct
 *  Adaptability to Prompts: GPT-2 can generate conditional samples, meaning it can generate text based on a given prompt or topic. This directly supports the user interaction feature of our web application, where users provide prompts, and the model generates poetry in response.
 *  Open-Source Availability and Community Support: While larger, more recent models exist, GPT-2 offers a balance of strong performance and accessibility. Its open-source nature, coupled with robust support from libraries like Hugging Face Transformers, makes it practical for research and development, allowing for easier implementation, fine-tuning, and deployment within a web application.
 
-## Training & Fine-Tuning
+## Training and Fine-Tuning
 
-## Evaluation & Metrics
+## Evaluation and Metrics
 
 * Programming language used: Python.
 * Libraries used: 
