@@ -49,7 +49,7 @@ is transformed into an output poem (a longer text sequence) under explicit styli
 
 ## Benchmarking
 
-**Summary of GPT-Family Models**
+**Summary of GPT-Family Models used in Experiments**
 
 | Feature / Model                          | **DistilGPT2** | **GPT-2 (base)** | **GPT-2 Large** | **GPT-Neo 1.3B** |
 | :--------------------------------------- | :----------------------- | :----------------------- | :----------------------- | :--------------------------- |
