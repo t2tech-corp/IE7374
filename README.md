@@ -49,6 +49,22 @@ is transformed into an output poem (a longer text sequence) under explicit styli
 
 ## Benchmarking
 
+* Summary of GPT-Family Models *
+
+| Feature / Model                          | **DistilGPT2** | **GPT-2 (base)** | **GPT-2 Large** | **GPT-Neo 1.3B** |
+| :--------------------------------------- | :----------------------- | :----------------------- | :----------------------- | :--------------------------- |
+| **Parameters** | 82 Million               | 117 Million              | 774 Million              | 1.3 Billion                  |
+| **Training Data** | Subset of WebText (distilled from GPT-2) | WebText (large internet corpus) | WebText                  | The Pile (large, diverse, higher quality than WebText) |
+| **Architecture** | Distilled Transformer    | Transformer              | Transformer              | Transformer (similar to GPT-3 architecture elements) |
+| **VRAM / Compute Needs (Relative)** | **Lowest** | Low                      | Medium                   | **Medium-High** |
+| **Training Time (Per Step with LoRA, Relative)** | **Fastest** | Fast                     | Medium                   | Slower than GPT-2 Large      |
+| **General Generation Quality (Coherence, Fluency)** | Fair (can be repetitive/less coherent) | Good                     | Very Good                | **Excellent** (for its size) |
+| **Stylistic Adaptation (with LoRA & Small Dataset)** | **Very Limited** (Least capacity to learn new style) | Limited (prone to drift to general prose) | Better (Can initiate style, but struggles to sustain) | **Good Potential** (Showed strong poetic initiation, still drifts) |
+| **Output Observed in Project** | (Not explicitly used for final gen) Expect most generic/incoherent | Drifted quickly into generic prose. | Better coherence, but still generic prose. | **Best Poetic Initiation**, high coherence, but still drifted to prose. |
+
+---
+
+
 ## Experiments
 
 ## Framework
