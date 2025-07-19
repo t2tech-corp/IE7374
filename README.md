@@ -13,9 +13,6 @@
 - [Model Development](#model-development)
 - [Training and Fine-Tuning](#training-and-fine-tuning)
 - [Evaluation and Metrics](#evaluation-and-metrics)
-- [Requirements](#requirements)
-- [Usage](#usage)
-- [Results](#results)
 - [Future Work](#future-work)
 - [License](#license)
 - [Team Members](#team-members)
@@ -148,22 +145,6 @@ analysis and qualitative human evaluation are crucial for capturing stylistic fi
 * **Part-of-Speech (POS) Usage (Linguistic - Stylistic Fingerprinting):** This involves analyzing the frequency and patterns of different parts of speech (nouns, verbs, adjectives, adverbs, etc.) in the generated poems compared to the original Renaissance poetry dataset. Specific poetic styles often have characteristic POS distributions (e.g., high adjective/noun ratio for descriptive poetry, high verb usage for action-oriented text). This is a powerful metric for assessing stylistic transfer. If the model successfully adopts the Renaissance style, its POS usage patterns should align more closely with the fine-tuning data than with generic prose. Libraries like ``spaCy`` or ``NLTK`` can be used for POS tagging.
 * **Cosine Similarity on Embeddings (Semantic - Content Similarity):** This involves converting poems (generated and original) into numerical vector representations (embeddings) using a pre-trained sentence transformer model. Cosine similarity then measures the cosine of the angle between two embedding vectors, indicating their semantic similarity (ranging from -1 for opposite to 1 for identical). Cosine Similarity can assess if the semantic content or overall meaning of the generated poems aligns with the themes present in the Renaissance love poetry dataset. However, high semantic similarity does not directly imply stylistic mimicry; two poems can be about "love" but sound vastly different.
 * **Human Evaluation (Qualitative - The Ultimate Judge for Style):** For subjective and creative tasks like poetry generation, human judgment remains indispensable. This involves having human evaluators read and score the generated poems based on criteria such as stylistic fidelity, coherence and fluency, creativity or novelty, and overall poetic quality. Human evaluation likely provides the most direct and accurate assessment of whether the model has truly achieved the project's artistic and stylistic goals.
-
-## Requirements
-
-All code can be run using the provided Python scripts and notebooks with the related datasets found in the corpus. Final Python and library versions will be provided upon final model decisions.
-
-## Usage
-
-Proper usage of the finalized scripts and selected models will be provided upon completion of project.
-
-## Results
-
-Results for models selected will be provided upon project completion once model refinements are settled. Results criteria will be as follows:
-
-* Performance metrics.
-* Comparisons of approaches.
-* Any visualizations or graphs to illustrate the results.
 
 ## Future Work
 
