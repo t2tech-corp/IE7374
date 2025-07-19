@@ -60,7 +60,7 @@ is transformed into an output poem (a longer text sequence) under explicit styli
 | **Training Time (Per Step with LoRA, Relative)** | **Fastest** | Fast                     | Medium                   | Slower than GPT-2 Large      |
 | **General Generation Quality (Coherence, Fluency)** | Fair (can be repetitive/less coherent) | Good                     | Very Good                | **Excellent** (for its size) |
 | **Stylistic Adaptation (with LoRA & Small Dataset)** | **Very Limited** (Least capacity to learn new style) | Limited (prone to drift to general prose) | Better (Can initiate style, but struggles to sustain) | **Good Potential** (Showed strong poetic initiation, still drifts) |
-| **Output Observed in Project** | (Not explicitly used for final gen) Expect most generic/incoherent | Drifted quickly into generic prose. | Better coherence, but still generic prose. | **Best Poetic Initiation**, high coherence, but still drifted to prose. |
+| **Output Observed in Project** | Most generic/incoherent | Drifted quickly into generic prose. | Better coherence, but still generic prose. | **Best Poetic Initiation**, high coherence. |
 
 
 ## Experiments
