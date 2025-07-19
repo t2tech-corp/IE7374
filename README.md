@@ -115,7 +115,7 @@ Results for models selected will be provided upon project completion once model 
 
 *  Exploring different models or techniques.
 *  Expanding the training corpus.
-*  Improving mdoel fine-tuning.
+*  Improving model fine-tuning.
 
 ## License
 The MIT License (MIT)
