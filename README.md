@@ -8,7 +8,7 @@
 - [Literature Review](#literature-review)
 - [Benchmarking](#benchmarking)
 - [Experiments](#experiments)
-- [Framework](#framework)
+- [Framework Selection](#framework-selection)
 - [Dataset](#dataset)
 - [Model Development](#model-development)
 - [Training and Fine-Tuning](#training-and-fine-tuning)
@@ -65,7 +65,19 @@ is transformed into an output poem (a longer text sequence) under explicit styli
 
 ## Experiments
 
-## Framework
+## Framework Selection
+
+The selection of NLP frameworks and libraries for this project was primarily driven by the need for efficient fine-tuning of large pre-trained language models (LLMs) on a specific,
+moderately sized dataset, balanced with the goal of achieving high-quality text generation.
+
+The core frameworks and libraries chosen include:
+
+*  **Hugging Face Transformers:** This was the foundational choice due to its unparalleled support for state-of-the-art pre-trained LLMs (such as GPT-2, GPT-2 Large, DistilGPT2, and GPT-Neo), readily available tokenizers, and robust training utilities (like ``TrainingArguments`` and ``Trainer``). Its comprehensive ecosystem allowed for seamless loading, configuration, and management of various GPT-family models.
+*  **Hugging Face Datasets:** Essential for efficient data handling, this library provided a streamlined way to load the merve/poetry dataset, apply complex filtering criteria (e.g., age='Renaissance', type='Love'), perform batch tokenization, and manage dataset caching. Its integration with transformers ensured a smooth data pipeline.
+*  **PEFT (Parameter-Efficient Fine-tuning):** Specifically, the LoRA (Low-Rank Adaptation) method from the PEFT library was crucial. Given the objective of fine-tuning LLMs on a relatively small, domain-specific dataset, LoRA allowed for highly efficient training by significantly reducing the number of trainable parameters. This enabled the project to perform fine-tuning on consumer-grade hardware while still leveraging powerful base models.
+*  **PyTorch:** As the underlying deep learning framework for the Hugging Face ecosystem in this project, PyTorch provided the computational backbone for model operations, gradient calculations, and GPU acceleration. Its flexibility and performance were key to optimizing the training process, especially when combined with mixed-precision training.
+*  **Accelerate:** While often used implicitly by the Hugging Face Trainer, accelerate further optimizes the training loop, especially when utilizing features like mixed precision, contributing to faster and more memory-efficient fine-tuning on available hardware.
+*  **Safetensors:** Used for efficiently loading model weights (specifically the LoRA adapters), safetensors offers a secure and faster alternative to traditional PyTorch .bin files, contributing to quicker model loading post-training.
 
 ## Dataset
 
