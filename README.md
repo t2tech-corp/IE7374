@@ -125,6 +125,18 @@ GPT-2 is an appropriate choice for our project due to several key reasons direct
 
 ## Training and Fine-Tuning
 
+The core of this project involved fine-tuning large pre-trained language models (LLMs) to adapt them to the unique style of Renaissance love poetry.
+This process leverages transfer learning, where a model that has already learned extensive language patterns from a massive, diverse dataset is further
+trained on a smaller, domain-specific dataset to acquire new capabilities or specialized knowledge.
+
+Key aspects of the training and fine-tuning process included:
+*  **Parameter-Efficient Fine-tuning (PEFT) with LoRA:** To make the fine-tuning process computationally feasible and memory-efficient, **LoRA (Low-Rank Adaptation)** was employed. Instead of updating all millions/billions of parameters in the pre-trained LLM, LoRA injects small, trainable low-rank matrices into select layers. This significantly reduces the number of parameters that need to be trained, making it possible to fine-tune powerful models like GPT-2 and GPT-Neo on consumer-grade GPUs.
+*  **Hugging Face Trainer:** The fine-tuning loop was managed using the Hugging Face Trainer API.
+*  **Hyperparameter Management:** Defining and applying essential training parameters such as ``learning_rate``, ``per_device_train_batch_size``, and ``num_train_epochs``.
+*  **Logging and Checkpointing:** Automatic logging of training loss and saving model checkpoints at specified intervals, allowing for monitoring progress and resuming training.
+*  **Mixed Precision Training:** Leveraging ``fp16`` (half-precision floating point) with a CUDA-enabled GPU to significantly speed up training and reduce memory consumption.
+*  **Model Adaptation:** Through the fine-tuning process, the pre-trained LLMs were guided to learn the linguistic nuances, thematic elements, and metaphorical structures prevalent in the curated dataset of Renaissance love poems. This aimed to enable them to generate new text that resonated with the target poetic style.
+
 ## Evaluation and Metrics
 
 * Programming language used: Python.
