@@ -105,20 +105,14 @@ Dataset preparation is a critical phase for fine-tuning any language model, ensu
 
 ## Model Development
 
-For this project, we will employ a pre-trained GPT-2 model. GPT-2 (Generative Pre-trained Transformer 2) is a Transformer-based decoder-only architecture. 
-Developed by OpenAI, it utilizes a stack of Transformer decoder blocks. This architecture is autoregressive, meaning it predicts the next token in a sequence
-based on all the preceding tokens, making it highly effective for generative tasks. GPT-2 was notable for its training on a massive and diverse corpus of internet
-text, allowing it to learn extensive linguistic patterns, grammar, syntax, and semantics.
+The model development phase focused on leveraging state-of-the-art pre-trained language models and implementing them in a modular and reusable manner,
+central to the project's goal of fine-tuning for specific stylistic generation.
 
-Leveraging a model already trained on a vast corpus of text significantly reduces the computational resources and time required for training from scratch. 
-The pre-trained model has already acquired a broad understanding of language, which we will then specialize through fine-tuning on our specific poetry dataset.
-This approach is highly recommended for achieving high-quality generative outputs efficiently within the scope of this project.
-
-GPT-2 is an appropriate choice for our project due to several key reasons directly aligning with our research questions and project goals:
-*  Strong Generative Capabilities: As a generative pre-trained transformer, GPT-2 excels at producing coherent, contextually relevant, and human-like text. This is fundamental to our goal of generating new poetry that embodies specific styles. Its autoregressive nature allows for the sequential generation of text, which is natural for poetic forms.
-*  Fine-tuning Potential for Stylistic Emulation: GPT-2's architecture and pre-training enable effective fine-tuning on smaller, domain-specific datasets. This is crucial for our project, as we aim to fine-tune the model on curated datasets of poetry (like merve/poetry) to capture and replicate the unique stylistic characteristics of chosen poets or poetic genres. The model's learned general linguistic knowledge serves as a powerful starting point, which can then be specialized for the intricate patterns of poetic language.
-*  Adaptability to Prompts: GPT-2 can generate conditional samples, meaning it can generate text based on a given prompt or topic. This directly supports the user interaction feature of our web application, where users provide prompts, and the model generates poetry in response.
-*  Open-Source Availability and Community Support: While larger, more recent models exist, GPT-2 offers a balance of strong performance and accessibility. Its open-source nature, coupled with robust support from libraries like Hugging Face Transformers, makes it practical for research and development, allowing for easier implementation, fine-tuning, and deployment within a web application.
+Key aspects of model implementation and development included:
+*  **Utilization of Pre-trained LLMs:** Instead of building a language model from scratch, the project strategically utilized powerful, pre-trained models from the GPT family, including ``DistilGPT2``, ``GPT-2 (base)``, ``GPT-2 Large``, and ``GPT-Neo 1.3B``. These models, readily available through the **Hugging Face Transformers** library, serve as robust starting points with extensive linguistic knowledge, allowing the fine-tuning process to focus solely on adapting to the unique nuances of Renaissance love poetry.
+*  **Modular Fine-tuning with LoRA:** The chosen fine-tuning method, **LoRA (Low-Rank Adaptation)** from the PEFT library, inherently promotes modularity. LoRA works by adding small, trainable adapter modules alongside the original pre-trained model's layers. This design ensures efficiency where only a fraction of the total model parameters are trained, significantly reducing computational requirements. The fine-tuned "knowledge" is encapsulated within small LoRA adapters, which can be easily swapped, saved, and loaded independently of the large base model. This makes the fine-tuning highly flexible and shareable.
+*  **Causal Language Model Implementation:** The selected GPT-family models are all causal language models, designed to predict the next token in a sequence. Their implementation within the Hugging Face ecosystem provided a consistent API for loading, tokenization, and generation, ensuring compatibility throughout the project.
+*  **Code Modularity and Reusability:** The codebase was structured to enhance clarity and reusability by using configurable parameters for model choices, output directories, and training hyperparameters. This allows for easy modification and experimentation with different models or training parameters/options. Dedicated functions for specific tasks were created for items like dataset fitering and tokenization. This allows for a clean data pipeline and adaptable for future dataset changes. Lastly, the project flow is logically divided into distinct steps (Configuration, Data Preparation, Model Loading, Fine-tuning, Generation), allowing for easier debugging, iteration, and understanding of the overall process.
 
 ## Training and Fine-Tuning
 
