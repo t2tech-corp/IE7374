@@ -1,13 +1,14 @@
-# IE7374
-Github Repo for IE7374 Project |Poetry Style Generative AI: Fine-tuning a Language Model for Interactive Poetry Style Generation
-
-This repository contains the code and resources for our semester project on Generative AI.
+# IE7374 Semester Project
+## Poetry Style Generative AI: Fine-tuning a Language Model for Interactive Poetry Style Generation
 
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Project Description](#project-description)
+- [Project Objective](#project-objective)
 - [Literature Review](#literature-review)
+- [Benchmarking](#benchmarking)
+- [Experiments](#experiments)
+- [Framework](#framework)
 - [Dataset](#dataset)
 - [Model Selection](#model)
 - [Methodology](#methodology)
@@ -29,12 +30,14 @@ merely grammatically correct but authentically represents the voice and form of 
 of generative AI for creative expression, education, and literary analysis.
 
 
-## Project Description
+## Project Objective
 
-This project aims to create an interactive web application where users can engage with a generative AI model that emulates a distinct poetic style.
-The core of the system will involve fine-tuning a pre-trained Large Language Model (LLM) on curated datasets of poetry to capture and replicate the
-unique stylistic characteristics of chosen poems. Users will be able to provide prompts or topics, and the application will generate new poetry that
-embodies the selected style, offering a unique method to explore literary stylings with artificial intelligence.
+The primary objective of this project is to develop and evaluate a generative AI system capable of producing novel poetic content that adheres to the
+distinct stylistic characteristics of a chosen literary author or genre. This directly involves language modeling, specifically fine-tuning a pre-trained
+Large Language Model to specialize its generative capabilities on specific poetic corpora. While the main task is generative text creation, the project
+implicitly touches upon aspects of text classification during the evaluation phase, as a style classifier will be used to quantitatively assess how well
+the generated text matches the target style. The system will act as a form of sequence-to-sequence modeling where an input prompt (a short text sequence)
+is transformed into an output poem (a longer text sequence) under explicit stylistic constraints.
 
 ## Literature Review
 
@@ -43,6 +46,12 @@ embodies the selected style, offering a unique method to explore literary stylin
 3.  Marvin, G., Hellen, N., Jjingo, D., & Nakatumba-Nabende, J. (2023, June). Prompt engineering in large language models. In International conference on data intelligence and cognitive informatics (pp. 387-402). Singapore: Springer Nature Singapore.
 4.  Alhafni, B., Kulkarni, V., Kumar, D., & Raheja, V. (2024). Personalized text generation with fine-grained linguistic control. arXiv preprint arXiv:2402.04914.
 5.  Ajwani, R. D., Zhu, Z., Rose, J., & Rudzicz, F. (2024). Plug and Play with Prompts: A Prompt Tuning Approach for Controlling Text Generation. arXiv preprint arXiv:2404.05143.
+
+## Benchmarking
+
+## Experiments
+
+## Framework
 
 ## Dataset
 
