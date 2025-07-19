@@ -10,9 +10,9 @@
 - [Experiments](#experiments)
 - [Framework](#framework)
 - [Dataset](#dataset)
-- [Model Selection](#model)
-- [Methodology](#methodology)
-- [Implementation](#implementation)
+- [Model Development](#model-development)
+- [Training & Fine-Tuning](#training-&-fine-tuning)
+- [Evaluation & Metrics](#evaluation-&-metrics)
 - [Requirements](#requirements)
 - [Usage](#usage)
 - [Results](#results)
@@ -70,7 +70,7 @@ It includes key features for each poem:
 *  Age: The period to which the poem belongs (e.g., Renaissance, Modern), which can be utilized to guide the model towards specific historical or genre-based poetic characteristics.
 *  Type: The subject or genre of the poem (e.g., Love, Nature, Mythology & Folklore), allowing for genre-specific model fine-tuning and content generation.
 
-## Model Selection
+## Model Development
 
 For this project, we will employ a pre-trained GPT-2 model. GPT-2 (Generative Pre-trained Transformer 2) is a Transformer-based decoder-only architecture. 
 Developed by OpenAI, it utilizes a stack of Transformer decoder blocks. This architecture is autoregressive, meaning it predicts the next token in a sequence
@@ -87,9 +87,9 @@ GPT-2 is an appropriate choice for our project due to several key reasons direct
 *  Adaptability to Prompts: GPT-2 can generate conditional samples, meaning it can generate text based on a given prompt or topic. This directly supports the user interaction feature of our web application, where users provide prompts, and the model generates poetry in response.
 *  Open-Source Availability and Community Support: While larger, more recent models exist, GPT-2 offers a balance of strong performance and accessibility. Its open-source nature, coupled with robust support from libraries like Hugging Face Transformers, makes it practical for research and development, allowing for easier implementation, fine-tuning, and deployment within a web application.
 
-## Methodology
+## Training & Fine-Tuning
 
-## Implementation
+## Evaluation & Metrics
 
 * Programming language used: Python.
 * Libraries used: 
