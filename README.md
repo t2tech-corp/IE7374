@@ -9,7 +9,7 @@
 - [Benchmarking](#benchmarking)
 - [Experiments](#experiments)
 - [Framework Selection](#framework-selection)
-- [Dataset](#dataset)
+- [Dataset Preparation](#dataset-preparation)
 - [Model Development](#model-development)
 - [Training and Fine-Tuning](#training-and-fine-tuning)
 - [Evaluation and Metrics](#evaluation-and-metrics)
@@ -79,22 +79,22 @@ The core frameworks and libraries chosen include:
 *  **Accelerate:** While often used implicitly by the Hugging Face ``Trainer``, ``accelerate`` further optimizes the training loop, especially when utilizing features like mixed precision, contributing to faster and more memory-efficient fine-tuning on available hardware.
 *  **Safetensors:** Used for efficiently loading model weights (specifically the LoRA adapters), ``safetensors`` offers a secure and faster alternative to traditional PyTorch ``.bin`` files, contributing to quicker model loading post-training.
 
-## Dataset
+## Dataset Preparation
 
-The selected dataset for this project is the merve/poetry dataset sourced from Hugging Face. This dataset is specifically chosen for its focus on diverse
+The selected dataset for this project is the ``merve/poetry`` dataset sourced from Hugging Face. This dataset is specifically chosen for its focus on diverse
 poetic styles and time periods, which is crucial for fine-tuning our generative AI model to emulate specific poetic genres. 
 
 The dataset consists of 573 poems authored by 67 unique poets. Its total file size is less than 1KB, making it efficient for training and deployment. Each sample is presented as structured text,
 with clear delineations for different attributes of the poem. 
 
-The merve/poetry dataset is monolingual (English) and is well-suited for our project due to its structured nature and rich content.
+The ``merve/poetry`` dataset is monolingual (English) and is well-suited for our project due to its structured nature and rich content.
 
 It includes key features for each poem:
-*  Content: The full text of the poem, which will serve as the primary input for the LLM fine-tuning process. This is directly relevant to learning poetic structures, vocabulary, and stylistic nuances.
-*  Author: The name of the poet, enabling us to train and differentiate models based on individual authorial styles.
-*  Poem name: The title of the poem.
-*  Age: The period to which the poem belongs (e.g., Renaissance, Modern), which can be utilized to guide the model towards specific historical or genre-based poetic characteristics.
-*  Type: The subject or genre of the poem (e.g., Love, Nature, Mythology & Folklore), allowing for genre-specific model fine-tuning and content generation.
+*  **Content:** The full text of the poem, which will serve as the primary input for the LLM fine-tuning process. This is directly relevant to learning poetic structures, vocabulary, and stylistic nuances.
+*  **Author:** The name of the poet, enabling us to train and differentiate models based on individual authorial styles.
+*  **Poem name:** The title of the poem.
+*  **Age:** The period to which the poem belongs (e.g., ``Renaissance``, ``Modern``), which can be utilized to guide the model towards specific historical or genre-based poetic characteristics.
+*  **Type:** The subject or genre of the poem (e.g., ``Love``, ``Nature``, ``Mythology & Folklore``), allowing for genre-specific model fine-tuning and content generation.
 
 ## Model Development
 
