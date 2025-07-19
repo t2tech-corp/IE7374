@@ -139,9 +139,15 @@ Key aspects of the training and fine-tuning process included:
 
 ## Evaluation and Metrics
 
-* Programming language used: Python.
-* Libraries used: 
-* Structure of the code: 
+Assessing the performance of a fine-tuned language model, particularly for a subjective and stylistic task like generating Renaissance love poetry,
+requires a multifaceted approach. While traditional quantitative metrics provide insights into language fluency and likelihood, deeper linguistic
+analysis and qualitative human evaluation are crucial for capturing stylistic fidelity.
+
+* **Perplexity (Quantitative - General Language Modeling Proficiency):** Perplexity measures how well a probability model predicts a sample. In the context of language models, a lower perplexity score indicates that the model assigns a higher probability to the test data, suggesting it is a more confident and fluent predictor of language. It serves as a general indicator of the model's ability to learn the statistical regularities of the fine-tuning dataset. A decreasing perplexity during training confirms that the model is learning from the poetry.
+* **N-gram Analysis (Quantitative - Repetition & Novelty):** N-gram metrics involve counting sequences of N words. Assessing the percentage of unique n-grams (e.g., unigrams, bigrams, trigrams) in the generated text provides insight into how repetitive the output is and its overall diversity. This helps confirm that ``repetition_penalty`` and ``no_repeat_ngram_size`` are effective during training and fine-tuning. Comparing n-grams in generated text with those in the training set can indicate memorization versus true generation. High overlap might suggest memorization.
+* **Part-of-Speech (POS) Usage (Linguistic - Stylistic Fingerprinting):** This involves analyzing the frequency and patterns of different parts of speech (nouns, verbs, adjectives, adverbs, etc.) in the generated poems compared to the original Renaissance poetry dataset. Specific poetic styles often have characteristic POS distributions (e.g., high adjective/noun ratio for descriptive poetry, high verb usage for action-oriented text). This is a powerful metric for assessing stylistic transfer. If the model successfully adopts the Renaissance style, its POS usage patterns should align more closely with the fine-tuning data than with generic prose. Libraries like ``spaCy`` or ``NLTK`` can be used for POS tagging.
+* **Cosine Similarity on Embeddings (Semantic - Content Similarity):** This involves converting poems (generated and original) into numerical vector representations (embeddings) using a pre-trained sentence transformer model. Cosine similarity then measures the cosine of the angle between two embedding vectors, indicating their semantic similarity (ranging from -1 for opposite to 1 for identical). Cosine Similarity can assess if the semantic content or overall meaning of the generated poems aligns with the themes present in the Renaissance love poetry dataset. However, high semantic similarity does not directly imply stylistic mimicry; two poems can be about "love" but sound vastly different.
+* **Human Evaluation (Qualitative - The Ultimate Judge for Style):** For subjective and creative tasks like poetry generation, human judgment remains indispensable. This involves having human evaluators read and score the generated poems based on criteria such as stylistic fidelity, coherence and fluency, creativity or novelty, and overall poetic quality. Human evaluation likely provides the most direct and accurate assessment of whether the model has truly achieved the project's artistic and stylistic goals.
 
 ## Requirements
 
