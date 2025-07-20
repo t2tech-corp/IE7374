@@ -1,0 +1,10 @@
+# Required Python Packages
+
+transformers # Hugging Face machine-learning models based on Transformer architecture
+datasets     # Hugging Face library for NLP and machine learning tasks
+peft         # Hugging Face Parameter-Efficient-Fine-Tuning
+torch        # Deep learning library with GPU acceleration
+safetensors  # Secure storing and loading of tensors for machine learning
+requests     # HTTP requests in Python
+pyyaml       # For reading YAML config files
+accelerate   # Used by Hugging Face Trainer
