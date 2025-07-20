@@ -1,0 +1,32 @@
+# General Settings
+model_name: "EleutherAI/gpt-neo-1.3B"
+dataset_name: "merve/poetry"
+output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to project-root
+
+# Training Parameters
+training:
+  learning_rate: 0.0002
+  per_device_train_batch_size: 4
+  num_train_epochs: 3
+  logging_steps: 50
+  save_steps: 500
+  save_total_limit: 2
+  fp16: True # Set to false if no CUDA GPU
+
+# LoRA Configuration
+lora:
+  r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM" # Corresponds to TaskType.CAUSAL_LM
+
+# Text Generation Parameters
+generation:
+  prompt: "O fairest rose that bloomed in summer's garden,"
+  max_length: 50
+  num_return_sequences: 1
+  no_repeat_ngram_size: 4
+  repetition_penalty: 1.2
+  num_beams: 5
+  do_sample: False # Set to True for sampling, False for pure beam search
