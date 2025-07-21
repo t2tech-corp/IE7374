@@ -52,8 +52,15 @@ Before running any scripts, review and adjust this file according to your needs 
 model_name: "EleutherAI/gpt-neo-1.3B"
 dataset_name: "merve/poetry"
 output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to project-root
-# ...
+```
 
 ## How to Run
 
+1. **Train the Model**
+   To start the fine-tuning process, run the ``train.py`` script:
+   ```bash
+    python src/train.py
+    ```
+   This script will load the dataset, set up the model with LoRA, and begin training based on the parameters in ``model_config.yaml``.
+   The fine-tuned LoRA adapters and tokenizer will be saved to the ``outputs/gpt_neo_renaissance_love_poems_lora/`` directory.
 
