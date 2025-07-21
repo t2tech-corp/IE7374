@@ -64,3 +64,18 @@ output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to pro
    This script will load the dataset, set up the model with LoRA, and begin training based on the parameters in ``model_config.yaml``.
    The fine-tuned LoRA adapters and tokenizer will be saved to the ``outputs/gpt_neo_renaissance_love_poems_lora/`` directory.
 
+2. **Generate Poems**   
+   After training, you can generate new poems using the ``model_runner.py`` script:
+   ```bash
+   python src/model_runner.py
+    ```
+   By default, this will use the prompt defined in ``model_config.yaml``. You can also provide a custom prompt:
+   ```bash
+   python src/model_runner.py "My dearest heart, your beauty bright"
+    ```
+
+3. **Explore with Jupyter Notebooks**
+   For interactive experimentation and to see the end-to-end pipeline in a notebook environment, launch Jupyter:
+   ```bash
+   jupyter notebook notebooks/demo_pipeline.ipynb
+    ```
