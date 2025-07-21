@@ -27,8 +27,8 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 
 1. **Clone the Repository:**
     ```bash
-    git clone [<your-repo-url>](https://github.com/t2tech-corp/IE7374/tree/main/project-root)
-    cd [<your-repo-name>](https://github.com/t2tech-corp/IE7374/tree/main/project-root)
+    git clone https://github.com/t2tech-corp/IE7374/tree/main/project-root
+    cd https://github.com/t2tech-corp/IE7374/tree/main/project-root
     ```
  2. **Create a Virtual Environment (Recommended):**
     ```bash
@@ -53,5 +53,7 @@ model_name: "EleutherAI/gpt-neo-1.3B"
 dataset_name: "merve/poetry"
 output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to project-root
 # ...
+
+## How to Run
 
 
