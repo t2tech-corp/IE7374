@@ -74,7 +74,7 @@ output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to pro
    python src/model_runner.py "My dearest heart, your beauty bright"
     ```
 
-3. **Explore with Jupyter Notebooks**
+3. **Explore with Jupyter Notebooks**    
    For interactive experimentation and to see the end-to-end pipeline in a notebook environment, launch Jupyter:
    ```bash
    jupyter notebook notebooks/demo_pipeline.ipynb
