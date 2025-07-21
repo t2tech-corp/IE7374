@@ -1,20 +1,37 @@
+# project-root/src/model_runner.py
+
 import os
 import torch
 import yaml
+import sys
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import LoraConfig, get_peft_model, TaskType
 from safetensors.torch import load_file
 
-# Assuming data_loader.py and utils are in the same src directory
-from data_loader import load_config # To load tokenizer and general config
+# Determine project_root based on the current file's location
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_file_dir, os.pardir))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+# Imports
+from src.data_loader import load_config
 from utils.helpers import get_device
 
-def generate_poem(prompt, config_path='configs/model_config.yaml'):
-    config = load_config(config_path)
+def generate_poem(prompt=None, config_path=None):
+    # If config_path is not provided (e.g., when called from __main__ or another script),
+    # construct its absolute path relative to project_root.
+    if config_path is None:
+        config_path = os.path.join(project_root, 'configs', 'model_config.yaml')
+
+    config = load_config(config_path=config_path)
 
     model_name = config['model_name']
-    output_dir = config['output_dir']
-    
+    output_dir = config['output_dir'] # This is likely relative from config
+
+    # Resolve output_dir to an absolute path for loading
+    full_output_dir = os.path.join(project_root, output_dir)
+
     # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     if tokenizer.pad_token is None:
@@ -29,36 +46,35 @@ def generate_poem(prompt, config_path='configs/model_config.yaml'):
         lora_alpha=config['lora']['lora_alpha'],
         lora_dropout=config['lora']['lora_dropout'],
         bias=config['lora']['bias'],
-        task_type=TaskType[config['lora']['task_type']] # Convert string to TaskType enum
+        task_type=TaskType[config['lora']['task_type']]
     )
     lora_model = get_peft_model(base_model, lora_config)
-
+    
     # Load the state dictionary from the .safetensors file
-    adapter_path = os.path.join(output_dir, "adapter_model.safetensors")
+    adapter_path = os.path.join(full_output_dir, "adapter_model.safetensors") # Use full path
 
     if not os.path.exists(adapter_path):
         print(f"Error: LoRA adapter file not found at {adapter_path}.")
         print("Please ensure fine-tuning completed successfully and the file was saved to the correct output_dir.")
         return "Error: Model not found."
 
-    lora_state_dict = load_file(adapter_path, device="cpu") # Load to CPU first
+    lora_state_dict = load_file(adapter_path, device="cpu")
     lora_model.load_state_dict(lora_state_dict, strict=False)
 
-    lora_model.eval() # Set model to evaluation mode
+    lora_model.eval()
 
     device = get_device()
     lora_model.to(device)
 
     # Prepare prompt
-    prompt_text = prompt if prompt else config['generation']['prompt']
+    prompt_text = prompt if prompt is not None else config['generation']['prompt'] # Handle prompt=None explicitly
     inputs = tokenizer.encode_plus(
         prompt_text,
         return_tensors='pt',
         padding='longest',
         truncation=True,
-        max_length=config['generation']['max_length'] # Use max_length from config for input encoding
+        max_length=config['generation']['max_length']
     )
-    
     input_ids = inputs['input_ids'].to(device)
     attention_mask = inputs['attention_mask'].to(device)
 
@@ -80,9 +96,8 @@ def generate_poem(prompt, config_path='configs/model_config.yaml'):
     generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
     print("Generated Poem:\n", generated_text)
 
-    # Save to samples.txt in outputs folder
-    samples_path = os.path.join(config['output_dir'], "samples.txt")
-    os.makedirs(os.path.dirname(samples_path), exist_ok=True) # Ensure outputs dir exists
+    samples_path = os.path.join(full_output_dir, "samples.txt") # Use full path
+    os.makedirs(os.path.dirname(samples_path), exist_ok=True)
     with open(samples_path, "a") as f:
         f.write(f"--- Prompt: {prompt_text} ---\n")
         f.write(f"{generated_text}\n\n")
@@ -91,7 +106,9 @@ def generate_poem(prompt, config_path='configs/model_config.yaml'):
     return generated_text
 
 if __name__ == "__main__":
-    # Example usage:
-    # Use prompt from config or provide a custom one
-    generate_poem(prompt=None)
-    # generate_poem(prompt="O, my true love, let us wander")
+    # When running model_runner.py directly, check for command-line prompt
+    if len(sys.argv) > 1:
+        custom_prompt = sys.argv[1]
+        generate_poem(prompt=custom_prompt)
+    else:
+        generate_poem(prompt=None)
