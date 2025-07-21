@@ -108,3 +108,30 @@ The project extensively leveraged **transfer learning**, fine-tuning pre-trained
 The core of this process relied on:
 * **LoRA (Low-Rank Adaptation):** As a PEFT method, LoRA significantly reduced the number of trainable parameters, enabling efficient fine-tuning on consumer-grade hardware by injecting small, adaptable matrices.
 * **Hugging Face ``Trainer``:** This API streamlined the training loop, managing hyperparameters (``learning_rate``, ``batch_size``, ``num_train_epochs``), logging, checkpointing, and leveraging mixed-precision training (``fp16``) for performance. This adaptation aimed to imbue the general-purpose LLMs with the unique linguistic nuances and stylistic elements of the target poetry domain.
+
+## Preliminary Experiments
+
+Initial small-scale tests were crucial for validating the feasibility of selected approaches. 
+
+This phase involved:
+* **Dataset Filtering Validation:** Ensuring accurate data selection and debugging issues like case sensitivity in metadata.
+* **LoRA Integration Check:** Confirming that LoRA correctly reduced trainable parameters and integrated with the base models.
+* **Basic Training Loop Feasibility:** Verifying that the data pipeline and ``Trainer`` setup executed without fundamental errors and that the model began to learn.
+* **Initial Text Generation Sanity Checks:** Confirming the model's ability to produce output post-training as a baseline for future improvements.
+
+## Experimentation with Prompts, Prompt Size, and Output Size
+
+Controlling the input and output dimensions was key to refining generation quality
+
+Findings include:
+* **Prompt Content:** Experiments focused on how initial phrases (e.g., "O, my love, you are like") could steer thematic and stylistic direction.
+* **Prompt Size:** While not extensively varied, understanding the role of input context for guiding generation was implicit.
+* **Output Size (``max_length``):** Systematically adjusting ``max_length`` (e.g., from 150 down to 30-40 tokens) revealed a critical insight: the fine-tuned models (especially ``GPT-Neo 1.3B``) could reliably initiate generation in the desired Renaissance poetic style for a few lines, but consistently drifted into conversational prose if allowed to generate longer outputs. This highlighted a trade-off between output length and stylistic purity, guiding the strategy to capture the most poetic fragments.
+
+## Experimentation with Beam Search
+
+Beam Search was implemented as a decoding strategy to significantly enhance generated text quality.
+
+* **Mechanism:** Instead of simple greedy decoding, Beam Search explored multiple probable sequences (``num_beams=5``), selecting globally optimal paths.
+* **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
+* **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
