@@ -23,3 +23,35 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 * **`requirements.txt`**: Lists all the Python dependencies required for the project, allowing others to easily set up their environment using `pip install -r requirements.txt`.
 * **`README.md`**: A crucial file providing an overview of the project, setup instructions, how to run the code, and any other relevant information for users or collaborators.
 
+## Setup and Installation
+
+1. **Clone the Repository:**
+    ```bash
+    git clone [<your-repo-url>](https://github.com/t2tech-corp/IE7374/tree/main/project-root)
+    cd [<your-repo-name>](https://github.com/t2tech-corp/IE7374/tree/main/project-root)
+    ```
+ 2. **Create a Virtual Environment (Recommended):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Linux/macOS
+    # venv\Scripts\activate   # On Windows
+    ```
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ``` 
+
+## Configuration
+
+All model parameters, training hyperparameters, and generation settings are managed in `configs/model_config.yaml`.
+Before running any scripts, review and adjust this file according to your needs and available hardware.
+
+```yaml
+# Example snippet from model_config.yaml
+# General Settings
+model_name: "EleutherAI/gpt-neo-1.3B"
+dataset_name: "merve/poetry"
+output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to project-root
+# ...
+
+
