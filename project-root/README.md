@@ -23,6 +23,56 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 * **`requirements.txt`**: Lists all the Python dependencies required for the project, allowing others to easily set up their environment using `pip install -r requirements.txt`.
 * **`README.md`**: A crucial file providing an overview of the project, setup instructions, how to run the code, and any other relevant information for users or collaborators.
 
+## Core Pipeline Components
+
+The project's functionality is organized into several key Python scripts and a central configuration file, ensuring modularity, reusability, and clarity.
+
+**``model_config.yaml``**
+This YAML file serves as the single source of truth for all configurable parameters in the project, enhancing modularity and ease of experimentation.
+It stores all hyperparameters, model names, directory paths, and generation settings in a human-readable and easily modifiable format.
+
+Centralizing these settings in a YAML file allows for rapid iteration on experiments without modifying the Python code, promoting consistency
+and reusability across different runs and components of the pipeline.
+
+* **General Settings:** Defines the ``model_name`` (e.g., "EleutherAI/gpt-neo-1.3B"), ``dataset_name`` ("merve/poetry"), and the ``output_dir`` for saving results.
+* **Training Parameters:** Specifies ``learning_rate``, ``per_device_train_batch_size``, ``num_train_epochs``, logging frequency, save limits, and ``fp16`` (mixed precision) settings for the ``Trainer``.
+* **LoRA Configuration:** Details the LoRA parameters such as ``r`` (rank), ``lora_alpha`` (scaling factor), ``lora_dropout``, ``bias`` settings, and the ``task_type`` for PEFT.
+* **Text Generation Parameters:** Includes all parameters critical for controlling the generated output, such as ``prompt``, ``max_length``, ``num_return_sequences``, ``no_repeat_ngram_size``, ``repetition_penalty``, ``num_beams`` (for beam search), and ``do_sample``.
+
+**``data_loader.py``**
+This script centralizes all operations related to dataset acquisition and preprocessing. It is responsible for loading, filtering, and preparing the
+raw data into a format suitable for model training and inference.
+
+* **Configuration Access:** Contains a function (``load_config``) to read project-wide settings from ``configs/model_config.yaml``.
+* **Dataset Loading:** Fetches the ``raw merve/poetry`` dataset from the Hugging Face Hub.
+* **Targeted Filtering:** Implements specific logic (``filter_renaissance_love``) to narrow down the dataset to only Renaissance love poems, ensuring the model is fine-tuned on highly relevant content.
+* **Tokenizer Initialization:** Loads the appropriate ``AutoTokenizer`` for the chosen LLM, handling special token requirements (e.g., setting ``pad_token = eos_token`` for GPT-family models).
+* **Tokenization Pipeline:** Defines and applies a tokenization function to convert raw poem text into numerical ``input_ids``, managing ``truncation`` and ``max_length`` to prepare sequences for the model.
+* **Data Collator Setup:** Configures a ``DataCollatorForLanguageModeling`` to handle dynamic padding of batches and automatic label generation for causal language modeling.
+* **Output:** Returns the tokenized dataset, the configured data collator, and the tokenizer itself, ready for use by ``train.py`` and ``model_runner.py``.
+
+**``train.py``**
+This script serves as the orchestrator for the model fine-tuning process. It brings together data preparation, model loading, and the training loop.
+It executes the fine-tuning of the selected pre-trained language model (e.g., GPT-Neo) using LoRA adapters.
+
+* **Configuration Loading:** Loads all operational parameters, hyperparameters, and model settings from ``configs/model_config.yaml``.
+* **Data Integration:** Utilizes functions from ``data_loader.py`` to load, filter, and tokenize the ``merve/poetry`` dataset, preparing it for the training process.
+* **Model Initialization:** Loads the chosen pre-trained base LLM (``EleutherAI/gpt-neo-1.3B``).
+* **LoRA Application:** Configures and applies LoRA adapters to the base model using the ``peft`` library, making only a small fraction of the model's parameters trainable.
+* **Training Execution:** Sets up ``TrainingArguments`` (defining learning rate, batch size, epochs, logging, saving strategies, and mixed precision) and initiates the training process via the Hugging Face ``Trainer``.
+* **Model Saving:**  Upon successful completion of fine-tuning, it saves only the trained LoRA adapters (``adapter_model.safetensors``) and the tokenizer configuration to the specified ``output_dir``, ensuring a lightweight and reusable fine-tuned model.
+
+**``model_runner.py``**
+This script is dedicated to inference, allowing one to generate new poems using the fine-tuned model. It loads a previously fine-tuned model and generates text based on user-provided or default prompts.
+
+* **Configuration Loading:** Retrieves all necessary settings, including model name, output directories, and generation parameters, from ``configs/model_config.yaml``.
+* **Model Reconstruction:** Loads the original pre-trained base LLM and then intelligently reconstructs the ``PeftModel`` structure by applying the saved LoRA configuration.
+* **Adapter Loading:** Loads the trained LoRA adapter weights (``adapter_model.safetensors``) into the reconstructed model, effectively "activating" the fine-tuned knowledge.
+* **Tokenizer Loading:** Loads the corresponding tokenizer, crucial for encoding input prompts and decoding generated text.
+* **Prompt Preparation:** Encodes the input prompt into the model's numerical format, including generating an ``attention_mask`` for optimal generation quality.
+* **Text Generation:** Utilizes the model's ``generate()`` method with carefully selected parameters (``num_beams`` for coherence, ``repetition_penalty`` for diversity,``max_length`` for output control) to produce new poetic text.
+* **Output Saving:** Appends the generated poems, along with their prompts, to ``outputs/samples.txt`` for evaluation.
+
 ## Setup and Installation
 
 1. **Clone the Repository:**
