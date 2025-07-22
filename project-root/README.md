@@ -27,7 +27,7 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 
 The project's functionality is organized into several key Python scripts and a central configuration file, ensuring modularity, reusability, and clarity.
 
-**``model_config.yaml``**
+**``model_config.yaml``**   
 This YAML file serves as the single source of truth for all configurable parameters in the project, enhancing modularity and ease of experimentation.
 It stores all hyperparameters, model names, directory paths, and generation settings in a human-readable and easily modifiable format.
 
@@ -39,7 +39,7 @@ and reusability across different runs and components of the pipeline.
 * **LoRA Configuration:** Details the LoRA parameters such as ``r`` (rank), ``lora_alpha`` (scaling factor), ``lora_dropout``, ``bias`` settings, and the ``task_type`` for PEFT.
 * **Text Generation Parameters:** Includes all parameters critical for controlling the generated output, such as ``prompt``, ``max_length``, ``num_return_sequences``, ``no_repeat_ngram_size``, ``repetition_penalty``, ``num_beams`` (for beam search), and ``do_sample``.
 
-**``data_loader.py``**
+**``data_loader.py``**   
 This script centralizes all operations related to dataset acquisition and preprocessing. It is responsible for loading, filtering, and preparing the
 raw data into a format suitable for model training and inference.
 
@@ -51,7 +51,7 @@ raw data into a format suitable for model training and inference.
 * **Data Collator Setup:** Configures a ``DataCollatorForLanguageModeling`` to handle dynamic padding of batches and automatic label generation for causal language modeling.
 * **Output:** Returns the tokenized dataset, the configured data collator, and the tokenizer itself, ready for use by ``train.py`` and ``model_runner.py``.
 
-**``train.py``**
+**``train.py``**   
 This script serves as the orchestrator for the model fine-tuning process. It brings together data preparation, model loading, and the training loop.
 It executes the fine-tuning of the selected pre-trained language model (e.g., GPT-Neo) using LoRA adapters.
 
@@ -62,7 +62,7 @@ It executes the fine-tuning of the selected pre-trained language model (e.g., GP
 * **Training Execution:** Sets up ``TrainingArguments`` (defining learning rate, batch size, epochs, logging, saving strategies, and mixed precision) and initiates the training process via the Hugging Face ``Trainer``.
 * **Model Saving:**  Upon successful completion of fine-tuning, it saves only the trained LoRA adapters (``adapter_model.safetensors``) and the tokenizer configuration to the specified ``output_dir``, ensuring a lightweight and reusable fine-tuned model.
 
-**``model_runner.py``**
+**``model_runner.py``**   
 This script is dedicated to inference, allowing one to generate new poems using the fine-tuned model. It loads a previously fine-tuned model and generates text based on user-provided or default prompts.
 
 * **Configuration Loading:** Retrieves all necessary settings, including model name, output directories, and generation parameters, from ``configs/model_config.yaml``.
