@@ -195,7 +195,7 @@ Measures how “surprised” a language model is by a given text. Lower perplexi
 * Lower scores indicate the model is better at modeling the style/content of your corpus.
 * Extremely low scores can also hint at overly safe or repetitive outputs.
 
-Average Perplexity: 30.97
+**Average Perplexity: 30.97**
 
 An average perplexity of 30.97 indicates that the fine-tuned GPT-Neo model is generating well-formed and statistically plausible English sentences.
 This is a positive outcome for the fundamental language modeling aspect.
@@ -234,6 +234,8 @@ An Average Self-BLEU of 0.1252 is a very low score. It strongly suggests that yo
 different poems (or poetic fragments) from the diverse prompts provided.
 
 ## Style Metrics
+
+Using the 12 generated poems from the fine-tuned model, a series of style metrics were calculated to assess model performance.
 
 **TTR (Type-Token Ratio)**   
 Reflects the variety of vocabulary used in a text, with higher TTRs indicating greater diversity.
