@@ -186,7 +186,7 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 * **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
 * **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
 
-## Evaluation
+## Evaluation Statistics
 
 Using the 12 generated poems from the fine-tuned model, a series of evaluations were performed to assess model performance.
 
@@ -197,7 +197,8 @@ Measures how “surprised” a language model is by a given text. Lower perplexi
 
 Average Perplexity: 30.97
 
-
+An average perplexity of 30.97 indicates that the fine-tuned GPT-Neo model is generating well-formed and statistically plausible English sentences.
+This is a positive outcome for the fundamental language modeling aspect.
 
 **Word-Level Diversity**   
 Quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
@@ -207,8 +208,8 @@ Quantifies how many unique n-grams appear in the generated texts, relative to th
 
 Average Word-Level Diversity: 0.4958
 
-An average perplexity of 30.97 indicates that the fine-tuned GPT-Neo model is generating well-formed and statistically plausible English sentences.
-This is a positive outcome for the fundamental language modeling aspect.
+An average word-level diversity of 0.4958 is a moderate score. It would suggest that while the model avoids repeating phrases, it might still
+repeat individual words more often than desired for highly lexically rich poetry, indicating an area for potential improvement in vocabulary variety.
 
 **Phrase-Level Diversity**   
 Quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
@@ -277,3 +278,13 @@ An average Novelty Score of 0.1885 is relatively low. This suggests that, on ave
 compared to the ``merve/poetry`` fine-tuning dataset. It implies that the model might be heavily influenced by, or even directly reproducing short phrases
 or common patterns it encountered during training.
 
+## Summary
+
+The evaluation statistics and style metrics indicate that the project successfully developed a fine-tuned GPT-Neo model capable of generating highly fluent,
+coherent, and diverse text that effectively initiates a Renaissance love poem style. The technical fine-tuning with LoRA and careful parameter tuning proved
+highly effective in controlling basic text quality and activating the desired stylistic mode.
+
+However, the primary challenge is the model's ability to sustain that specific poetic style and linguistic fidelity over an entire generation,
+and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
+small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
+more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
