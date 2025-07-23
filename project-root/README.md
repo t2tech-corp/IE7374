@@ -185,3 +185,65 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 * **Mechanism:** Instead of simple greedy decoding, Beam Search explored multiple probable sequences (``num_beams=5``), selecting globally optimal paths.
 * **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
 * **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
+
+## Evaluation
+
+Using the 12 generated poems from the fine-tuned model, a series of evaluations were performed to assess model performance.
+
+**Perplexity:** Measures how “surprised” a language model is by a given text. Lower perplexity means the model assigns higher probability to the text.
+* Lower scores indicate the model is better at modeling the style/content of your corpus.
+* Extremely low scores can also hint at overly safe or repetitive outputs.
+
+Average Perplexity: 30.97
+
+**Word-Level Diversity:** quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
+* Distinct-1 measures word-level diversity (unigrams).
+* Values closer to 1.0 mean high diversity (few repeats)
+* Values closer to 0 mean the model is repeating the same words/phrases.
+
+Average Distinct-1: 0.4958
+
+**Phrase-Level Diversity:** quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
+* Distinct-2 measures phrase-level diversity (bigrams).
+* Values closer to 1.0 mean high diversity (few repeats)
+* Values closer to 0 mean the model is repeating the same words/phrases.
+
+Average Distinct-2: 0.8493
+
+**Self-BLEU:** Evaluates how similar the generated samples are to one another. It’s a reverse of BLEU: treating each generation as a “hypothesis” and all the others as “references.”
+* Scores range from 0 to 1.
+* Higher Self-BLEU means samples are very similar to each other (low diversity).
+* Lower Self-BLEU means samples are more distinct.
+
+Average Self-BLEU: 0.1252
+
+## Style Metrics
+
+**TTR (Type-Token Ratio):** Reflects the variety of vocabulary used in a text, with higher TTRs indicating greater diversity.
+* High TTR (closer to 1): lots of different words — strong variety.
+* Low TTR (closer to 0): repeat the same words more often — less variety.
+
+Average TTR: 0.7202
+
+**Simpson Diversity Index:** Quantifies the diversity of text or vocabulary within a corpus.
+* High Simpson (closer to 1): high probability that two randomly picked tokens are different—strong diversity.
+* Low Simpson (closer to 0): high chance that two picks are the same token—low diversity.
+
+Average Simpson Diversity: 0.9706
+
+**POS KL Divergence:** Compares the distribution of POS tags in different texts or linguistic models.
+* Low KL (near 0): generated poem’s POS mix is very similar to the reference style.
+* High KL: generated poem’s POS proportions deviate strongly from that style.
+
+Average POS KL Divergence: 0.3209
+
+**Novelty Detection (Cosine Similarity):** Assesses similarity in various applications, including text analysis. 
+* Scores range from -1 to 1
+* 1: Indicates the vectors are perfectly aligned and identical in direction (maximum similarity).
+* 0: Indicates the vectors are orthogonal (no similarity).
+* -1: Indicates the vectors are diametrically opposed (maximum dissimilarity).
+
+Average Novelty: 0.1885
+
+
+
