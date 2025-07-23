@@ -186,9 +186,9 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 * **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
 * **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
 
-## Evaluation Statistics
+## Evaluation Statistics & Style Metrics
 
-Using the 12 generated poems from the fine-tuned model, a series of evaluations were performed to assess model performance.
+Using the 12 generated poems from the fine-tuned model, a series of evaluation statistics and style metrics were calculated to assess model performance.
 
 **Perplexity**   
 Measures how “surprised” a language model is by a given text. Lower perplexity means the model assigns higher probability to the text.
@@ -239,9 +239,7 @@ Evaluates how similar the generated samples are to one another. It’s a reverse
 An Average Self-BLEU of 0.1252 is a very low score. It strongly suggests that your fine-tuned model is capable of generating a wide variety of 
 different poems (or poetic fragments) from the diverse prompts provided.
 
-## Style Metrics
-
-Using the 12 generated poems from the fine-tuned model, a series of style metrics were calculated to assess model performance.
+---
 
 **TTR (Type-Token Ratio)**   
 Reflects the variety of vocabulary used in a text, with higher TTRs indicating greater diversity.
@@ -291,6 +289,8 @@ Assesses similarity in various applications, including text analysis.
 An average Novelty Score of 0.1885 is relatively low. This suggests that, on average, a significant portion of the generated content is not entirely new
 compared to the ``merve/poetry`` fine-tuning dataset. It implies that the model might be heavily influenced by, or even directly reproducing short phrases
 or common patterns it encountered during training.
+
+---
 
 ## Summary
 
