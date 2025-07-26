@@ -3,6 +3,22 @@
 This project explores the fine-tuning of GPT-family language models (LLMs) to generate poetry in the style of Renaissance love poems.
 Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to adapt powerful pre-trained models efficiently for a niche stylistic task.
 
+## Table of Contents
+
+- [Repository Structure](#repository-structure)
+- [Core Pipeline Components](#core-pipeline-components)
+- [Setup and Installation](#setup-and-installation)
+- [Configuration](#configuration)
+- [How to Run](#how-to-run)
+- [Framework Selection](#framework-selection)
+- [Dataset Preparation](#dataset-preparation)
+- [Training and Fine Tuning](#training-and-fine-tuning)
+- [Preliminary Experiments](#preliminary-experiments)
+- [Experimentation with Prompts and Output Size](#experimentation-with-prompts-and-output-size)
+- [Experimentation with Beam Search](#experimentation-with-beam-search)
+- [Evaluation Statistics and Style Metrics](#evaluation-statistics-and-style-metrics)
+- [Summary](#summary)
+
 ## Repository Structure
 
 * **`project-root/`**: The top-level directory for the entire project.
@@ -151,7 +167,7 @@ Steps included:
 3. **Tokenization:** Employing ``AutoTokenizer`` to convert text into numerical ``input_ids``, handling ``max_length`` truncation, and setting ``tokenizer.pad_token = tokenizer.eos_token`` for consistent batching.
 4. **Data Collator:** Using ``DataCollatorForLanguageModeling`` to prepare batches with dynamic padding and language modeling labels for the training process.
 
-## Training & Fine Tuning
+## Training and Fine Tuning
 
 The project extensively leveraged **transfer learning**, fine-tuning pre-trained GPT-family LLMs to generate Renaissance love poetry. 
 
@@ -169,7 +185,7 @@ This phase involved:
 * **Basic Training Loop Feasibility:** Verifying that the data pipeline and ``Trainer`` setup executed without fundamental errors and that the model began to learn.
 * **Initial Text Generation Sanity Checks:** Confirming the model's ability to produce output post-training as a baseline for future improvements.
 
-## Experimentation with Prompts, Prompt Size, and Output Size
+## Experimentation with Prompts and Output Size
 
 Controlling the input and output dimensions was key to refining generation quality
 
@@ -186,7 +202,7 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 * **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
 * **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
 
-## Evaluation Statistics & Style Metrics
+## Evaluation Statistics and Style Metrics
 
 Using the 12 generated poems from the fine-tuned model, a series of evaluation statistics and style metrics were calculated to assess model performance.
 
