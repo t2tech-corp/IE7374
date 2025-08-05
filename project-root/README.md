@@ -159,6 +159,8 @@ This combination provided a robust, flexible, and efficient toolkit for the proj
 
 ## Dataset Preparation
 
+### Primary Dataset ``merve/poetry``
+
 Dataset preparation involved a meticulous process to transform the raw ``merve/poetry`` dataset into a fine-tune-ready format.
 
 Steps included:
@@ -166,6 +168,17 @@ Steps included:
 2. **Targeted Filtering:** Applying precise filters (``age='Renaissance'``, ``type='Love'``) to select the relevant subset of poems, after careful validation of dataset metadata.
 3. **Tokenization:** Employing ``AutoTokenizer`` to convert text into numerical ``input_ids``, handling ``max_length`` truncation, and setting ``tokenizer.pad_token = tokenizer.eos_token`` for consistent batching.
 4. **Data Collator:** Using ``DataCollatorForLanguageModeling`` to prepare batches with dynamic padding and language modeling labels for the training process.
+
+### Secondary Dataset ``gutenberg_renaissance_poetry_corpus``
+
+A second dataset was added to enhance fine-tuning of the model. The source of the dataset was a collection of selected Renaissance authors found in the **Project Gutenberg** online library. 
+
+**Project Gutenberg** is a volunteer-led effort to digitize, archive, and distribute cultural works, particularly older literary works for which copyright has expired. It is a free online library of e-books,
+with a focus on making classic literature accessible to everyone. The project was founded in 1971 by Michael Hart and is the oldest digital library. 
+
+Steps included:
+1. **Loading:** Utilizing the ``R`` package ``gutenbergr`` for initial metadata acquisition.
+2. 
 
 ## Training and Fine Tuning
 
@@ -318,3 +331,4 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
