@@ -183,7 +183,7 @@ The addition of the **Project Gutenberg** corpus added approximately 90,000 line
 Steps included:
 1. **Loading:** Utilizing the ``R`` package ``gutenbergr`` for initial metadata acquisition.
 2. **Targeted Filtering:** Applying precise filters (``author%in%'renaissance_poets'``, ``language='en'``, ``has_text='TRUE'``, ``str_detect(rights, "Public domain in the USA")``) to select the relevant subset of works, after careful validation of dataset metadata.
-3. **Data Cleaning:** Exxtensive data cleaning included removal of publisher comments, foreign languages (Greek, Italian, French, Latin), non-alpha characters, and other non-relevant material.
+3. **Data Cleaning:** Extensive data cleaning included removal of publisher comments, foreign languages (Greek, Italian, French, Latin), non-alpha characters, and other non-relevant material.
 4. **Data Concatenation:** The cleaned corpus was concatenated by ``gutenberg_id`` with appropriate end-of-line controls and ``end_of_poem_token <- "<|endofpoem|>"``.
 5. **Tokenization:** Employing ``AutoTokenizer`` to convert text into numerical ``input_ids``, handling ``max_length`` truncation, and setting ``tokenizer.pad_token = tokenizer.eos_token`` for consistent batching.
 6. **Data Collator:** Using ``DataCollatorForLanguageModeling`` to prepare batches with dynamic padding and language modeling labels for the training process.
@@ -205,6 +205,34 @@ The project extensively leveraged **transfer learning**, fine-tuning pre-trained
 The core of this process relied on:
 * **LoRA (Low-Rank Adaptation):** As a PEFT method, LoRA significantly reduced the number of trainable parameters, enabling efficient fine-tuning on consumer-grade hardware by injecting small, adaptable matrices.
 * **Hugging Face ``Trainer``:** This API streamlined the training loop, managing hyperparameters (``learning_rate``, ``batch_size``, ``num_train_epochs``), logging, checkpointing, and leveraging mixed-precision training (``fp16``) for performance. This adaptation aimed to imbue the general-purpose LLMs with the unique linguistic nuances and stylistic elements of the target poetry domain.
+
+### Initial LoRA Configuration
+
+The initial configuration for LoRA model fine-tuning consisted of:
+* ``model_name: "EleutherAI/gpt-neo-1.3B"``
+* ``r: 8``
+* ``lora_alpha: 16``
+* ``lora_dropout: 0.05``
+* ``bias: "none"``
+* ``task_type: "CAUSAL_LM"``
+
+### Final LoRA Configuration
+
+The initial configuration for LoRA model fine-tuning consisted of:
+* ``model_name: "EleutherAI/gpt-neo-2.7B"``
+* ``r: 16``
+* ``lora_alpha: 32``
+* ``lora_dropout: 0.05``
+* ``bias: "none"``
+* ``task_type: "CAUSAL_LM"``
+
+### Impact of Model Change
+
+The primary benefit of moving from ``EleutherAI/gpt-neo-1.3B`` to ``EleutherAI/gpt-neo-2.7B`` is a significant increase in the model's capacity to learn and retain information.
+A model with 2.7 billion parameters has a larger network of connections and a more extensive knowledge base from its pre-training on ``The Pile`` dataset.
+
+* **Improved Coherence and Fluency:** Larger language models generally produce more fluent and logically consistent text. The 2.7B model is better at understanding long-range dependencies and can generate more coherent narratives.
+* **Enhanced Stylistic Fidelity:** With more parameters, the model is better equipped to absorb the subtle, complex patterns of Renaissance poetry. This increases the likelihood that it will be able to sustain the desired poetic style for longer, reducing the tendency to drift into generic prose that was observed with the smaller model.
 
 ## Preliminary Experiments
 
@@ -349,6 +377,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
