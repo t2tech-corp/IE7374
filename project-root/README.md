@@ -178,7 +178,7 @@ with a focus on making classic literature accessible to everyone. The project wa
 
 Steps included:
 1. **Loading:** Utilizing the ``R`` package ``gutenbergr`` for initial metadata acquisition.
-2. 
+2. **Targeted Filtering:** Applying precise filters (``author%in%'renaissance_poets'``, ``language='en'``, ``has_text='TRUE'``, ``str_detect(rights, "Public domain in the USA")``) to select the relevant subset of works, after careful validation of dataset metadata.
 
 ## Training and Fine Tuning
 
@@ -331,4 +331,5 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
