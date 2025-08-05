@@ -176,12 +176,27 @@ A second dataset was added to enhance fine-tuning of the model. The source of th
 **Project Gutenberg** is a volunteer-led effort to digitize, archive, and distribute cultural works, particularly older literary works for which copyright has expired. It is a free online library of e-books,
 with a focus on making classic literature accessible to everyone. The project was founded in 1971 by Michael Hart and is the oldest digital library.
 
-[title](https://www.gutenberg.org/)
+The addition of the **Project Gutenberg** corpus added approximately 90,000 lines of Renaissance poetry to the fine-tuning process.
+
+[Project Gutenberg](https://www.gutenberg.org/)
 
 Steps included:
 1. **Loading:** Utilizing the ``R`` package ``gutenbergr`` for initial metadata acquisition.
 2. **Targeted Filtering:** Applying precise filters (``author%in%'renaissance_poets'``, ``language='en'``, ``has_text='TRUE'``, ``str_detect(rights, "Public domain in the USA")``) to select the relevant subset of works, after careful validation of dataset metadata.
 3. **Data Cleaning:** Exxtensive data cleaning included removal of publisher comments, foreign languages (Greek, Italian, French, Latin), non-alpha characters, and other non-relevant material.
+4. **Data Concatenation:** The cleaned corpus was concatenated by ``gutenberg_id`` with appropriate end-of-line controls and ``end_of_poem_token <- "<|endofpoem|>"``.
+5. **Tokenization:** Employing ``AutoTokenizer`` to convert text into numerical ``input_ids``, handling ``max_length`` truncation, and setting ``tokenizer.pad_token = tokenizer.eos_token`` for consistent batching.
+6. **Data Collator:** Using ``DataCollatorForLanguageModeling`` to prepare batches with dynamic padding and language modeling labels for the training process.
+
+### Combining Datasets
+
+The sourced utility ``data_loader.py`` was modified from the original to support the additional dataset for fine-tuning.
+
+Steps included:
+1. Expanded the functions imported from ``datasets`` to include ``Dataset`` and ``concatenate_datasets``.
+2. Creation of the function ``load_local_poetry_file()`` to read the new dataset (``renaissance_poetry_corpus.txt``) created in the ``R`` project.
+3. Modifiction to the function ``load_and_prepare_dataset()`` to load and parse both datasets, concatenate to ``combined_dataset``, tokenize the concatenated dataset, and then add to the data collator.
+4. The model was then re-trained using the concatenated datasets to provide a larger fine-tuning corpus.
 
 ## Training and Fine Tuning
 
@@ -334,6 +349,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
