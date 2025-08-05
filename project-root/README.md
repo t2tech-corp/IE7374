@@ -174,11 +174,14 @@ Steps included:
 A second dataset was added to enhance fine-tuning of the model. The source of the dataset was a collection of selected Renaissance authors found in the **Project Gutenberg** online library. 
 
 **Project Gutenberg** is a volunteer-led effort to digitize, archive, and distribute cultural works, particularly older literary works for which copyright has expired. It is a free online library of e-books,
-with a focus on making classic literature accessible to everyone. The project was founded in 1971 by Michael Hart and is the oldest digital library. 
+with a focus on making classic literature accessible to everyone. The project was founded in 1971 by Michael Hart and is the oldest digital library.
+
+[title]((https://www.gutenberg.org/))
 
 Steps included:
 1. **Loading:** Utilizing the ``R`` package ``gutenbergr`` for initial metadata acquisition.
 2. **Targeted Filtering:** Applying precise filters (``author%in%'renaissance_poets'``, ``language='en'``, ``has_text='TRUE'``, ``str_detect(rights, "Public domain in the USA")``) to select the relevant subset of works, after careful validation of dataset metadata.
+3. **Data Cleaning:** Exxtensive data cleaning included removal of publisher comments, foreign languages (Greek, Italian, French, Latin), non-alpha characters, and other non-relevant material.
 
 ## Training and Fine Tuning
 
@@ -331,5 +334,6 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
