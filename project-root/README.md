@@ -13,6 +13,7 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 - [Framework Selection](#framework-selection)
 - [Dataset Preparation](#dataset-preparation)
 - [Training and Fine Tuning](#training-and-fine-tuning)
+- [Experimentation with Models](#experimentation-with-models)
 - [Preliminary Experiments](#preliminary-experiments)
 - [Experimentation with Prompts and Output Size](#experimentation-with-prompts-and-output-size)
 - [Experimentation with Beam Search](#experimentation-with-beam-search)
@@ -400,6 +401,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
