@@ -279,7 +279,7 @@ After testing the various models identified in the above table, ``GPT-Neo 2.7B``
     **Example 2:** For "When first I saw thy heavenly face," the model generated a fantastic couplet with two distinct metaphors: "Thou didst seem to me as the morning star; / And when I heard thy voice, it was like the sound of many waters."
 
 * **Reduced Thematic and Colloquial Drift:** The ``GPT-Neo 2.7B`` model is much less prone to the thematic collapses and modern phrasing seen in earlier tests with prior models. The problematic religious drift and the conversational colloquialism that appeared in the ``GPT-Neo 1.3B`` model's outputs are now absent, replaced by more consistent and appropriate romantic imagery.
-* **Stronger Poetic Structure"** The generate poems demonstrate a better grasp of poetic form. They flow more naturally, with lines and ideas building upon one another rather than just being a collection of poetic fragments.
+* **Stronger Poetic Structure** The generate poems demonstrate a better grasp of poetic form. They flow more naturally, with lines and ideas building upon one another rather than just being a collection of poetic fragments.
 
 **Model Selection Summary**
 
@@ -429,6 +429,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
