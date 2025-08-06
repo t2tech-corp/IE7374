@@ -234,7 +234,7 @@ A model with 2.7 billion parameters has a larger network of connections and a mo
 * **Improved Coherence and Fluency:** Larger language models generally produce more fluent and logically consistent text. The 2.7B model is better at understanding long-range dependencies and can generate more coherent narratives.
 * **Enhanced Stylistic Fidelity:** With more parameters, the model is better equipped to absorb the subtle, complex patterns of Renaissance poetry. This increases the likelihood that it will be able to sustain the desired poetic style for longer, reducing the tendency to drift into generic prose that was observed with the smaller model.
 
-### Impact of LoRA COnfiguration Change
+### Impact of LoRA Configuration Change
 
 The change to the LoRA configuration from ``r=8``, ``lora_alpha=16`` to ``r=16``, ``lora_alpha=32`` is a direct way to provide the fine-tuning process with more "expressive power."
 
@@ -385,6 +385,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
