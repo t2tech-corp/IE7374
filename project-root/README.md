@@ -242,6 +242,21 @@ The change to the LoRA configuration from ``r=8``, ``lora_alpha=16`` to ``r=16``
 * **Maintained Learning Rate Scaling:** Increasing ``lora_alpha`` from 16 to 32 keeps the LoRA learning rate scaling consistent with the new rank (maintaining the ``lora_alpha`` / ``r`` ratio). This ensures that the fine-tuning process proceeds at a stable and effective pace.
 * **Higher VRAM and Training Time:** The change resulted in higher GPU VRAM usage and a slightly longer training time per step due to the increased number of trainable parameters. However, the potential for a more accurate stylistic capture outweighed this cost.
 
+## Experimentation with Models
+
+**Summary of GPT-Family Models used in Experiments**
+
+| Feature / Model                          | **DistilGPT2** | **GPT-2 (base)** | **GPT-2 Large** | **GPT-Neo 1.3B** | **GPT-Neo 2.7B** |
+| :--------------------------------------- | :----------------------- | :----------------------- | :----------------------- | :--------------------------- | :--------------------------- |
+| **Parameters** | 82 Million               | 117 Million              | 774 Million              | 1.3 Billion                  | 2.7 Billion
+| **Training Data** | Subset of WebText (distilled from GPT-2) | WebText (large internet corpus) | WebText                  | The Pile (large, diverse, higher quality than WebText) | The Pile |
+| **Architecture** | Distilled Transformer    | Transformer              | Transformer              | Transformer (similar to GPT-3 architecture elements) | Transformer (similar to GPT-3 architecture elements) |
+| **VRAM / Compute Needs (Relative)** | Lowest | Low                      | Medium                   | Medium-High | High |
+| **Training Time (Per Step with LoRA, Relative)** | Fastest | Fast                     | Medium                   | Slower than GPT-2 Large      | Significantly Slower than 1.3B |
+| **General Generation Quality (Coherence, Fluency)** | Fair (can be repetitive/less coherent) | Good                     | Very Good                | Excellent | Superior |
+| **Stylistic Adaptation (with LoRA & Small Dataset)** | Very Limited (Least capacity to learn new style) | Limited (Prone to drift to general prose) | Better (Can initiate style, but struggles to sustain) | Good Potential (Showed strong poetic initiation) | Strongest Potential (Best at sustaining style and coherence) |
+| **Output Observed in Project** | Most generic/incoherent | Drifted quickly into generic prose. | Better coherence, but still generic prose. | Best Poetic Initiation with high coherence. | The most stylistically authentic and coherent. |
+
 ## Preliminary Experiments
 
 Initial small-scale tests were crucial for validating the feasibility of selected approaches. 
@@ -385,6 +400,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
