@@ -270,13 +270,13 @@ After testing the various models identified in the above table, ``GPT-Neo 2.7B``
 
 * **Sustained Stylistic Fidelity:** The ``GPT-Neo 1.3B`` model often produced a strong poetic opening and then quickly drifted into repetitive or conversational prose. The ``GPT-Neo 2.7B`` model was much better at maintaining the poetic voice and structure for an extended period. For many of the prompts, it completed couplet-like structures or entire stanzas before reaching the ``max_length`` limit.
 
-**Example:** For the prompt "O, thou my soul's most radiant star," the ``GPT-Neo 2.7B`` model generated a cohesive couplet using perfect archaic phrasing: "Whom I behold with heav'n-admiring eyes; / Thou, who art the light of my life, and the joy of my heart!" The ``GPT-Neo 1.3B`` model's output for this prompt often devolved into generic phrases.
+    **Example:** For the prompt "O, thou my soul's most radiant star," the ``GPT-Neo 2.7B`` model generated a cohesive couplet using perfect archaic phrasing: "Whom I behold with heav'n-admiring eyes; / Thou, who art the light of my life, and the joy of my heart!" The ``GPT-Neo 1.3B`` model's output for this prompt often devolved into generic phrases.
 
 * **Higher Quality of Poetic Imagery and Phrasing:** The use of metaphors and vocabulary are more sophisticated and original using ``GPT-Neo 2.7B``. The model generated truly evocative lines that sound authentic to the Renaissance style.
 
-**Example 1:** The generated output for "O, how thy beauty doth amaze my sight," continues with "I see thee as a star that shineth bright / In the firmament of heaven above." This is a beautiful and complete metaphor, a clear improvement over the ``GPT-Neo 1.3B`` model's repetitive output.
+    **Example 1:** The generated output for "O, how thy beauty doth amaze my sight," continues with "I see thee as a star that shineth bright / In the firmament of heaven above." This is a beautiful and complete metaphor, a clear improvement over the ``GPT-Neo 1.3B`` model's repetitive output.
 
-**Example 2:** For "When first I saw thy heavenly face," the model generated a fantastic couplet with two distinct metaphors: "Thou didst seem to me as the morning star; / And when I heard thy voice, it was like the sound of many waters."
+    **Example 2:** For "When first I saw thy heavenly face," the model generated a fantastic couplet with two distinct metaphors: "Thou didst seem to me as the morning star; / And when I heard thy voice, it was like the sound of many waters."
 
 * **Reduced Thematic and Colloquial Drift:** The ``GPT-Neo 2.7B`` model is much less prone to the thematic collapses and modern phrasing seen in earlier tests with prior models. The problematic religious drift and the conversational colloquialism that appeared in the ``GPT-Neo 1.3B`` model's outputs are now absent, replaced by more consistent and appropriate romantic imagery.
 * **Stronger Poetic Structure"** The generate poems demonstrate a better grasp of poetic form. They flow more naturally, with lines and ideas building upon one another rather than just being a collection of poetic fragments.
@@ -429,6 +429,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
