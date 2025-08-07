@@ -17,7 +17,10 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 - [Preliminary Experiments](#preliminary-experiments)
 - [Experimentation with Prompts and Output Size](#experimentation-with-prompts-and-output-size)
 - [Experimentation with Beam Search](#experimentation-with-beam-search)
-- [Evaluation Statistics and Style Metrics](#evaluation-statistics-and-style-metrics)
+- [Experimentation with Text Generation Parameters](#experimentation-with-text-generation-parameters)
+- [Evaluation Statistics and Style Metrics with Deterministic Beams](#evaluation-statistics-and-style-metrics-with-deterministic-beams)
+- [Evaluation Statistics and Style Metrics with Random Sampling](#evaluation-statistics-and-style-metrics-with-random-sampling)
+- [Lessons Learned](#lessons-learned)
 - [Summary](#summary)
 
 ## Repository Structure
@@ -313,7 +316,69 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 * **Impact:** This led to a dramatic improvement in overall coherence and fluency of the generated text, reducing repetition effectively (in conjunction with ``repetition_penalty`` and ``no_repeat_ngram_size``).
 * **Limitations:** While greatly improving general text quality, Beam Search did not inherently resolve the stylistic drift from poetic to prose form, as it optimizes for what the underlying model considers most probable, which often defaults to the general prose learned during pre-training.
 
-## Evaluation Statistics and Style Metrics
+## Experimentation with Text Generation Parameters
+
+During the initial model testing, a deterministic approach was taken for text generation with ``num_beams=5`` and ``do_sample=False``. When the decision was made to use ``GPT-Neo 2.7B``, the same deterministic approach
+was followed to determine like-for-like improvements over previous model selections. Once satisfied with the prelimiary results, experimentation began with introducing random sampling for probabilistic generation to
+potentially improve creativity.
+
+* When ``do_sample=True``, the model no longer simply picks the most probable token. Instead, it treats the probability distribution over the vocabulary as a set of weights and randomly samples a token from that distribution. Tokens with higher probabilities are more likely to be chosen, but are not guaranteed.
+* This mode is used in conjunction with other parameters like ``temperature``, ``top_k``, and ``top_p``, which control how the sampling is performed.
+* The advantages to this methodology are the generation of more diverse and creative output, less repitition, and can lead to output that a deterministic approach may never find.
+* The disadvantages are that generated output is less reproducible and can become less coherent.
+
+When ``num_beams=1`` and ``do_sample=True``, the output is based on pure sampling. This proved to be problemsome in that style fidelity and cohesiveness was very low. The adopted settings that generated the best results
+was ``num_beams=5`` and ``do_sample=True``. This is referred to as **Beam-Sampling** and is considered a hybrid approach.
+
+* The model maintains ``num_beams`` (5) parallel sequences, like in pure beam search.
+* At each step, instead of deterministically picking the most probable token for each beam, it samples the next token for each beam based on the probability distribution (controlled by ``temperature``, ``top_k``, ``top_p``).
+
+This strategy often provides a good balance, combining the coherence-promoting benefits of beam search with the diversity and creativity of sampling.
+
+**Temperature**
+
+The ``temperature`` parameter is an important setting in text generation that directly controls the randomness or creativity of the model's output when using sampling (``do_sample = True``).
+
+* **Temperature = 1.0 (Default / No Change):** The model samples tokens directly according to their original predicted probabilities. Higher-probability tokens are more likely to be chosen, but all tokens have a chance.
+* **Low Temperature (e.g., 0.7, 0.8, 0.5):** Increases the likelihood of choosing tokens that already have high probabilities, while significantly reducing the chances of selecting lower-probability tokens. The generated text becomes more deterministic, predictable, focused, and coherent. It will tend to stick to the most "safe" and probable paths.
+* **High Temperature (e.g., 1.2, 1.5, 2.0):** Reduces the difference between high and low-probability tokens, giving even less likely tokens a more significant chance of being selected. The generated text becomes more random, creative, surprising, and adventurous. However, it can lead to less coherent, grammatically incorrect, or even nonsensical output, as the model takes more "risks" with its word choices.
+
+We settled on ``temperature: 0.9`` as an effective balance between creativity and coherence.
+
+**Top_k**
+
+The ``top_k`` parameter is another important setting that controls the diversity and creativity of the model's generated text. At each step of text generation, after the model has calculated the probability
+of every possible next word in its entire vocabulary, ``top_k`` instructs the model to identify the ``k`` most probable tokens and sample from the reduced set.
+
+* **Low ``top_k`` (5, 10, 20):** Severely restricts the model's choices to only the very most probable next tokens. Generates text that is very focused, conservative, predictable, and coherent.
+* **High ``top_k`` (50, 100, 200):** Allows the model to choose from a much wider pool of high-probability tokens. Generates text that is more diverse, creative, adventurous, and less repetitive. It explores more varied phrasing.
+
+We found an approrpriate setting of ``top_k: 100``. This setting helped improved the creativity of the generated poems and helped to reduce the occurrence of repetitive words and phrases.
+
+**Top_p**
+
+The ``top_p`` parameter, often referred to as nucleus sampling, helps in controlling the diversity and randomness of generated text when using sampling (``do_sample = True``). It provides a more dynamic way
+to select the pool of tokens to sample from compared to ``top_k``. At each step of text generation, the model calculates the probability of every possible next token in its vocabulary. It then sorts all
+possible next tokens in descending order of their probability. ``top_p`` then selects the smallest set of tokens from the top of this sorted list whose cumulative probability sums up to at least ``p``.
+The model then samples the next token only from this dynamically sized "nucleus" of tokens. All other tokens are ignored.
+
+**``top_p = 1.0`` (Default / No Filtering):** The cumulative probability must reach 100%, so the model considers the entire vocabulary for sampling. 
+**Low ``top_p`` (0.5, 0.7):** Restricts the model's choices to only the very most probable tokens, creating a smaller "nucleus." This leads to more focused, conservative, predictable, and coherent text.
+**High ``top_p`` (0.9, 0.95, 0.99):** Allows the model to consider a wider, but still high-probability, set of tokens for sampling, creating a larger "nucleus." This can lead to more diverse, creative, adventurous, and less repetitive outputs.
+
+Our preferred setting was ``top_p: 0.90``. This choice provided a good balance between diversity and maintaining high-quality outputs.
+
+**Repitition**
+
+During early experimental testing, a common issue in the generated poems was word and phrase repitition. As part of the text generation parameter settings, we implemented ``no_repeat_ngram_size``
+and ``repetition_penalty``. 
+
+* The ``no_repeat_ngram_size`` parameter in Hugging Face Transformers' ``generate()`` method controls a very strict form of repetition avoidance. This parameter prevents the model from generating an n-gram if that exact n-gram has already appeared in the text generated so far.
+* The ``repetition_penalty`` parameter in Hugging Face Transformers' ``generate()`` method allows the control how much the model is discouraged from repeating tokens or n-grams that have already appeared in the generated text.
+
+In our testing, we found ``no_repeat_ngram_size: 3`` and ``repetition_penalty: 1.5`` to be appropriate parameter settings that helped reduce the occurences of repeated phrases while still maintaining some of the stylistic attributes of Renaissance poetry in which some repitition is common.
+
+## Evaluation Statistics and Style Metrics with Deterministic Beams
 
 Using the 12 generated poems from the fine-tuned model, a series of evaluation statistics and style metrics were calculated to assess model performance.
 
@@ -417,6 +482,9 @@ An average Novelty Score of 0.1885 is relatively low. This suggests that, on ave
 compared to the ``merve/poetry`` fine-tuning dataset. It implies that the model might be heavily influenced by, or even directly reproducing short phrases
 or common patterns it encountered during training.
 
+## Evaluation Statistics and Style Metrics with Random Sampling
+
+## Lessons Learned
 ---
 
 ## Summary
@@ -429,6 +497,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
