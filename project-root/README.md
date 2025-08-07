@@ -319,7 +319,7 @@ Beam Search was implemented as a decoding strategy to significantly enhance gene
 ## Experimentation with Text Generation Parameters
 
 During the initial model testing, a deterministic approach was taken for text generation with ``num_beams=5`` and ``do_sample=False``. When the decision was made to use ``GPT-Neo 2.7B``, the same deterministic approach
-was followed to determine like-for-like improvements over previous model selections. Once satisfied with the prelimiary results, experimentation began with introducing random sampling for probabilistic generation to
+was followed to determine like-for-like improvements over previous model selections. Once satisfied with the preliminary results, experimentation began with introducing random sampling for probabilistic generation to
 potentially improve creativity.
 
 * When ``do_sample=True``, the model no longer simply picks the most probable token. Instead, it treats the probability distribution over the vocabulary as a set of weights and randomly samples a token from that distribution. Tokens with higher probabilities are more likely to be chosen, but are not guaranteed.
@@ -497,6 +497,7 @@ However, the primary challenge is the model's ability to sustain that specific p
 and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
 small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
 more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+
 
 
 
