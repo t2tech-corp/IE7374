@@ -1,5 +1,6 @@
 # General Settings
-model_name: "EleutherAI/gpt-neo-1.3B"
+#model_name: "EleutherAI/gpt-neo-1.3B"
+model_name: "EleutherAI/gpt-neo-2.7B"
 dataset_name: "merve/poetry"
 output_dir: "outputs/gpt_neo_renaissance_love_poems_lora" # Relative path to project-root
 
@@ -15,18 +16,35 @@ training:
 
 # LoRA Configuration
 lora:
-  r: 8
-  lora_alpha: 16
+  r: 16 # Original value 8
+  lora_alpha: 32 # Original value 16
   lora_dropout: 0.05
   bias: "none"
   task_type: "CAUSAL_LM" # Corresponds to TaskType.CAUSAL_LM
 
-# Text Generation Parameters
+# Text Generation Parameters with deterministic beams
+#generation:
+#  prompt: "O fairest rose that bloomed in summer's garden,"
+#  max_length: 50
+#  num_return_sequences: 1
+#  no_repeat_ngram_size: 3 # Chnaged from 4
+#  repetition_penalty: 1.2 # Changed from 1.2
+#  num_beams: 5            # Changed from 5                   
+#  do_sample: False # Set to True for sampling, False for pure beam search
+
+# Text Generation Parameters with random sampling
+# do_sample: For probabilistic sampling generation
+# temperature: Controls randomness or creativity of the model's output when sampling
+# top_k: Sample from a reduced set of `k` tokens with the highest probability
+# top_p: Select the smallest set of tokens from probability of next tokens.
 generation:
   prompt: "O fairest rose that bloomed in summer's garden,"
   max_length: 50
   num_return_sequences: 1
-  no_repeat_ngram_size: 4
-  repetition_penalty: 1.2
-  num_beams: 5
-  do_sample: False # Set to True for sampling, False for pure beam search
+  no_repeat_ngram_size: 3 # N-Gram size for no repeat
+  repetition_penalty: 1.5 # Discourage repitition
+  num_beams: 5          # Set num_beams to 1 for pure sampling (or keep higher for beam-sampling)
+  do_sample: True       # <--- CHANGE THIS TO TRUE 
+  temperature: 0.9      # <--- ADD/ADJUST: A good starting point for sampling (0.7-1.0) Original 0.8
+  top_k: 100            # <--- ADD/ADJUST: Common value for sampling is 60
+  top_p: 0.90           # <--- ADD/ADJUST: Common value for sampling is .95
