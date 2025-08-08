@@ -20,7 +20,6 @@ Utilizing Parameter-Efficient Fine-tuning (PEFT) with LoRA, the project aims to 
 - [Experimentation with Text Generation Parameters](#experimentation-with-text-generation-parameters)
 - [Evaluation Statistics and Style Metrics with Deterministic Beams](#evaluation-statistics-and-style-metrics-with-deterministic-beams)
 - [Evaluation Statistics and Style Metrics with Random Sampling](#evaluation-statistics-and-style-metrics-with-random-sampling)
-- [Lessons Learned](#lessons-learned)
 - [Summary](#summary)
 
 ## Repository Structure
@@ -588,8 +587,6 @@ Assesses similarity in various applications, including text analysis.
 An average Novelty Score of 0.2056 represents a slight increase. However, a score of around 0.21 is still quite low. This indicates that the model, while much more stylistically
 accurate and coherent, is still heavily reliant on the specific phrases, patterns, and vocabulary it learned from the fine-tuning dataset.
 
-## Lessons Learned
-
 ## Summary
 
 The fine-tuning with ``GPT-Neo 2.7B`` and an increased LoRA rank (``r=16``) represents a significant success, validating the hypothesis that a more capable base model is key to
@@ -600,6 +597,7 @@ it to learn and apply the subtle patterns of Renaissance poetry more effectively
 improvements in all other metrics demonstrate that the model is generating high-quality, stylistically authentic, and diverse poetic fragments.
 
 The remaining challenge is no longer about fixing stylistic drift, but about refining the model's ability to generate complete, original poems of a longer length.
+
 
 
 
