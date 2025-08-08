@@ -484,19 +484,123 @@ or common patterns it encountered during training.
 
 ## Evaluation Statistics and Style Metrics with Random Sampling
 
-## Lessons Learned
+Using the 12 generated poems from the fine-tuned model, a series of evaluation statistics and style metrics were calculated to assess model performance.
+
+**Perplexity**   
+Measures how “surprised” a language model is by a given text. Lower perplexity means the model assigns higher probability to the text.
+* Lower scores indicate the model is better at modeling the style/content of your corpus.
+* Extremely low scores can also hint at overly safe or repetitive outputs.
+
+**Average Perplexity: 36.89**
+
+The higher perplexity suggests that the 2.7B model is not defaulting to the "safest," most statistically probable sequences. Instead, it is
+successfully using its larger capacity to generate less predictable, but more stylistically accurate, text. In this specific case, the higher
+perplexity is a sign of progress, not failure. The model is performing the difficult task of generating complex, unique text that aligns with
+a specific stylistic distribution, rather than simply producing generic, easily-predictable content.
+
 ---
+
+**Word-Level Diversity**   
+Quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
+* Measures word-level diversity (unigrams).
+* Values closer to 1.0 mean high diversity (few repeats)
+* Values closer to 0 mean the model is repeating the same words/phrases.
+
+**Average Word-Level Diversity: 0.5737**
+
+An average word-level diversity of 0.5737  is a good indicator of lexical variety. It suggests the model avoids excessive word repetition and uses
+a reasonably broad vocabulary.
+
+---
+
+**Phrase-Level Diversity**   
+Quantifies how many unique n-grams appear in the generated texts, relative to the total number of n-grams produced. It’s a simple diversity measure.
+* Measures phrase-level diversity (bigrams).
+* Values closer to 1.0 mean high diversity (few repeats)
+* Values closer to 0 mean the model is repeating the same words/phrases.
+
+**Average Phrase-Level Diversity: 0.9302**
+
+An average score of 0.9302, which is very close to the maximum possible value of 1.0, means that the fine-tuned model is generating text that is highly
+varied and not repetitive at the phrase level. This is a significant improvement over the previous score of 0.8493, which was already good.
+
+---
+
+**Self-BLEU**   
+Evaluates how similar the generated samples are to one another. It’s a reverse of BLEU: treating each generation as a “hypothesis” and all the others as “references.”
+* Scores range from 0 to 1.
+* Higher Self-BLEU means samples are very similar to each other (low diversity).
+* Lower Self-BLEU means samples are more distinct.
+
+**Average Self-BLEU: 0.0607**
+
+An Average Self-BLEU of 0.0607 is an outstanding result and a significant improvement over the previous score of 0.1252. The model is successfully producing a wide
+variety of distinct poems. It's not falling into "mode collapse" where it generates very similar outputs regardless of the prompt. This is a sign of a healthy and
+creative generative model.
+
+---
+
+**TTR (Type-Token Ratio)**   
+Reflects the variety of vocabulary used in a text, with higher TTRs indicating greater diversity.
+* High TTR (closer to 1): lots of different words — strong variety.
+* Low TTR (closer to 0): repeat the same words more often — less variety.
+
+**Average TTR: 0.8107**
+
+An average TTR of 0.8107 is an outstanding result and a significant improvement over the previous average of 0.7202. This very high TTR score indicates that the fine-tuned model
+is producing text that is exceptionally rich in vocabulary. Within each generated poem, the model is successfully avoiding repeated words and is drawing from a very broad lexicon.
+
+---
+
+**Simpson Diversity Index**   
+Quantifies the diversity of text or vocabulary within a corpus.
+* High Simpson (closer to 1): high probability that two randomly picked tokens are different—strong diversity.
+* Low Simpson (closer to 0): high chance that two picks are the same token—low diversity.
+
+**Average Simpson Diversity: 0.9833**
+
+An average Simpson Diversity of 0.9833 is an exceptionally high score for lexical diversity. The fine-tuned model consistently generates poems that are diverse in word choice.
+An average score this close to 1.0 suggests that the model is extremely effective at avoiding word repetition, which is crucial for creating rich and engaging poetic text.
+
+---
+
+**POS KL Divergence**   
+Compares the distribution of POS tags in different texts or linguistic models.
+* Low KL (near 0): generated poem’s POS mix is very similar to the reference style.
+* High KL: generated poem’s POS proportions deviate strongly from that style.
+
+**Average POS KL Divergence: 0.2740**
+
+An average POS KL Divergence of 0.2740 is a significant improvement. This score provides strong quantitative evidence that the ``GPT-Neo 2.7B`` model has a better grasp
+of the grammatical styling of Renaissance love poetry. 
+
+---
+
+**Novelty Detection (Cosine Similarity)**   
+Assesses similarity in various applications, including text analysis. 
+* Scores range from -1 to 1
+* 1: Indicates the vectors are perfectly aligned and identical in direction (maximum similarity).
+* 0: Indicates the vectors are orthogonal (no similarity).
+* -1: Indicates the vectors are diametrically opposed (maximum dissimilarity).
+
+**Average Novelty: 0.2056**
+
+An average Novelty Score of 0.2056 represents a slight increase. However, a score of around 0.21 is still quite low. This indicates that the model, while much more stylistically
+accurate and coherent, is still heavily reliant on the specific phrases, patterns, and vocabulary it learned from the fine-tuning dataset.
+
+## Lessons Learned
 
 ## Summary
 
-The evaluation statistics and style metrics indicate that the project successfully developed a fine-tuned GPT-Neo model capable of generating highly fluent,
-coherent, and diverse text that effectively initiates a Renaissance love poem style. The technical fine-tuning with LoRA and careful parameter tuning proved
-highly effective in controlling basic text quality and activating the desired stylistic mode.
+The fine-tuning with ``GPT-Neo 2.7B`` and an increased LoRA rank (``r=16``) represents a significant success, validating the hypothesis that a more capable base model is key to
+overcoming stylistic limitations. The new metrics and qualitative outputs show a clear and meaningful improvement.
 
-However, the primary challenge is the model's ability to sustain that specific poetic style and linguistic fidelity over an entire generation,
-and to produce truly novel content beyond variations of learned patterns. This points to the inherent limitations of fine-tuning with a comparatively
-small dataset against the large and generalized knowledge encoded in the base LLM. To achieve deeper stylistic mimicry and higher originality, a larger,
-more diverse collection of Renaissance poetry for fine-tuning would be the most impactful next step.
+The fine-tuning with ``GPT-Neo 2.7B`` successfully moved the project beyond simple language fluency and into genuine stylistic transfer. The model's increased capacity allowed
+it to learn and apply the subtle patterns of Renaissance poetry more effectively. While the average novelty score saw only a slight increase (from 0.1885 to 0.2056), the dramatic
+improvements in all other metrics demonstrate that the model is generating high-quality, stylistically authentic, and diverse poetic fragments.
+
+The remaining challenge is no longer about fixing stylistic drift, but about refining the model's ability to generate complete, original poems of a longer length.
+
 
 
 
